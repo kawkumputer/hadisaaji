@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../providers/hadith_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/islamic_decoration.dart';
-import '../data/hadiths_data.dart';
 import 'hadith_detail_screen.dart';
 import 'category_hadiths_screen.dart';
 
@@ -280,9 +279,9 @@ class HomeScreen extends StatelessWidget {
                       mainAxisSpacing: 12,
                       childAspectRatio: 1,
                     ),
-                    itemCount: categories.length,
+                    itemCount: provider.dynamicCategories.length,
                     itemBuilder: (context, index) {
-                      final cat = categories[index];
+                      final cat = provider.dynamicCategories[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -370,7 +369,7 @@ class HomeScreen extends StatelessWidget {
                             Icons.menu_book),
                         _buildStat(
                             context,
-                            '${categories.where((c) => c.count > 0).length}',
+                            '${provider.dynamicCategories.where((c) => c.count > 0).length}',
                             'Pecce',
                             Icons.category),
                         _buildStat(

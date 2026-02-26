@@ -70,11 +70,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     }
   }
 
-  Future<void> _stop() async {
-    await _player.stop();
-    setState(() => _position = Duration.zero);
-  }
-
   String _formatDuration(Duration d) {
     final minutes = d.inMinutes.remainder(60).toString().padLeft(2, '0');
     final seconds = d.inSeconds.remainder(60).toString().padLeft(2, '0');
