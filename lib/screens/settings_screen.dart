@@ -40,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
                   color: AppColors.primaryGreen,
                 ),
                 title: Text(
-                  'Niɓɓere / Lewru',
+                  'Niɓɓere / Lewlewal',
                   style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
                 ),
                 subtitle: Text(
@@ -286,7 +286,7 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'هديسعاجي',
+                    'أحاديث',
                     style: TextStyle(
                       fontSize: 32,
                       color: AppColors.goldAccent,
@@ -313,7 +313,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Hadiisaaji Annabi Muhammad ﷺ\nfiraaɗi ummoraade Arab to Pulaar',
+                    'Njangtuuji (Hadiisaaji) nulaaɗo Alla (jkm) ﷺ\npiraaɗi ummoraade Arab fayde e Pulaar',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
                       fontSize: 13,
@@ -325,7 +325,7 @@ class SettingsScreen extends StatelessWidget {
                   const Divider(),
                   const SizedBox(height: 12),
                   Text(
-                    'Imaaraat / Tellindo:',
+                    'Imaaraat / Tellinɗo:',
                     style: GoogleFonts.poppins(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                     // Arabic title
                     Text(
-                      'هديسعاجي',
+                      'أحاديث',
                       style: TextStyle(
                         fontSize: 48,
                         fontWeight: FontWeight.bold,
@@ -155,7 +155,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                     // Subtitle
                     Text(
-                      'Hadiisaaji Annabi Muhammad ﷺ',
+                      'Njangtuuji (Hadiisaaji) nulaaɗo Alla (jkm) ﷺ',
                       style: GoogleFonts.poppins(
                         fontSize: 14,
                         color: Colors.white.withValues(alpha: 0.85),

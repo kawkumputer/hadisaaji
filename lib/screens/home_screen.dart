@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 10),
                       Text(
-                        'هديسعاجي',
+                        'أحاديث',
                         style: TextStyle(
                           fontSize: 36,
                           color: AppColors.goldAccent.withValues(alpha: 0.9),
@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Hadiisaaji Annabi ﷺ e Pulaar',
+                        'Njangtuuji (Hadiisaaji) nulaaɗo Alla (jkm) ﷺ e Pulaar',
                         style: GoogleFonts.poppins(
                           fontSize: 12,
                           color: Colors.white.withValues(alpha: 0.7),
@@ -83,11 +83,6 @@ class HomeScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           color: AppColors.primaryGreen,
                         ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "Hadith du jour",
-                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 12),
 
@@ -261,8 +256,11 @@ class HomeScreen extends StatelessWidget {
                                 ),
                       ),
                       Text(
-                        'Catégories',
-                        style: Theme.of(context).textTheme.bodySmall,
+                        'أقسام',
+                         style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: AppColors.primaryGreen,
+                                ),
                       ),
                     ],
                   ),

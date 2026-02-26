@@ -113,7 +113,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
               ),
               const SizedBox(width: 8),
               Text(
-                'Heɗitaade Audio',
+                'Heɗto sawtowol',
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

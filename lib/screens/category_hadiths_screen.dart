@@ -38,17 +38,9 @@ class CategoryHadithsScreen extends StatelessWidget {
                       color: AppColors.textMedium,
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Aucun hadith dans cette catégorie pour le moment',
-                    style: GoogleFonts.poppins(
-                      fontSize: 13,
-                      color: AppColors.textLight,
-                    ),
-                  ),
                   const SizedBox(height: 8),
                   Text(
-                    'Ɓeydu hadiisaaji maa aroyde',
+                    'Hadiisaaji maa ɓeydoyo',
                     style: GoogleFonts.poppins(
                       fontSize: 13,
                       color: AppColors.primaryGreen,
