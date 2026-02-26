@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/hadiths_data.dart';
 import '../models/hadith.dart';
 import '../services/supabase_service.dart';
+import '../services/notification_service.dart';
 
 class HadithProvider extends ChangeNotifier {
   List<Hadith> _hadiths = [];
@@ -14,6 +15,9 @@ class HadithProvider extends ChangeNotifier {
   bool _isDarkMode = false;
   String _searchQuery = '';
   bool _isLoading = false;
+  bool _notificationsEnabled = true;
+  int _notifHour = 7;
+  int _notifMinute = 0;
 
   List<Hadith> get hadiths => _hadiths;
   List<HadithCategory> get dynamicCategories => _categories;
@@ -23,6 +27,10 @@ class HadithProvider extends ChangeNotifier {
   bool get isDarkMode => _isDarkMode;
   String get searchQuery => _searchQuery;
   bool get isLoading => _isLoading;
+  bool get notificationsEnabled => _notificationsEnabled;
+  int get notifHour => _notifHour;
+  int get notifMinute => _notifMinute;
+  TimeOfDay get notifTime => TimeOfDay(hour: _notifHour, minute: _notifMinute);
 
   List<Hadith> get favoriteHadiths =>
       _hadiths.where((h) => _favoriteIds.contains(h.id)).toList();
@@ -91,6 +99,9 @@ class HadithProvider extends ChangeNotifier {
     _arabicFontSize = prefs.getDouble('arabicFontSize') ?? 22.0;
     _pulaarFontSize = prefs.getDouble('pulaarFontSize') ?? 16.0;
     _isDarkMode = prefs.getBool('isDarkMode') ?? false;
+    _notificationsEnabled = await NotificationService.isEnabled;
+    _notifHour = await NotificationService.notifHour;
+    _notifMinute = await NotificationService.notifMinute;
   }
 
   Future<void> toggleFavorite(int hadithId) async {
@@ -131,5 +142,43 @@ class HadithProvider extends ChangeNotifier {
   void setSearchQuery(String query) {
     _searchQuery = query;
     notifyListeners();
+  }
+
+  Future<void> toggleNotifications(bool enabled) async {
+    _notificationsEnabled = enabled;
+    await NotificationService.setEnabled(enabled);
+    if (enabled) {
+      await _scheduleNotification();
+    } else {
+      await NotificationService.cancelDailyHadith();
+    }
+    notifyListeners();
+  }
+
+  Future<void> setNotifTime(TimeOfDay time) async {
+    _notifHour = time.hour;
+    _notifMinute = time.minute;
+    await NotificationService.setTime(time.hour, time.minute);
+    if (_notificationsEnabled) {
+      await _scheduleNotification();
+    }
+    notifyListeners();
+  }
+
+  Future<void> _scheduleNotification() async {
+    final hadith = hadithOfTheDay;
+    await NotificationService.scheduleDailyHadith(
+      title: '📖 Hadiis Ñalngu Hannde',
+      body: '${hadith.chapterTitle}\n${hadith.pulaarTranslation.substring(0, hadith.pulaarTranslation.length.clamp(0, 100))}...',
+      hour: _notifHour,
+      minute: _notifMinute,
+    );
+  }
+
+  Future<void> initNotifications() async {
+    await NotificationService.requestPermissions();
+    if (_notificationsEnabled) {
+      await _scheduleNotification();
+    }
   }
 }

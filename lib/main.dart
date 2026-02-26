@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'config/supabase_config.dart';
 import 'providers/hadith_provider.dart';
+import 'services/notification_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/splash_screen.dart';
 
@@ -14,8 +15,11 @@ void main() async {
     anonKey: SupabaseConfig.anonKey,
   );
 
+  await NotificationService.init();
+
   final hadithProvider = HadithProvider();
   await hadithProvider.init();
+  await hadithProvider.initNotifications();
   runApp(HadisaajiApp(hadithProvider: hadithProvider));
 }
 

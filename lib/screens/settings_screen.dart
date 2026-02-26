@@ -57,6 +57,73 @@ class SettingsScreen extends StatelessWidget {
 
             const IslamicDivider(),
 
+            // === NOTIFICATIONS ===
+            _buildSectionTitle(context, 'Tintinol', 'Notifications'),
+            const SizedBox(height: 12),
+
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardTheme.color,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: AppColors.goldAccent.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(
+                      Icons.notifications_active_rounded,
+                      color: AppColors.primaryGreen,
+                    ),
+                    title: Text(
+                      'Hadiis Ñalngu',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                    ),
+                    subtitle: Text(
+                      'Notification quotidienne',
+                      style: GoogleFonts.poppins(fontSize: 12),
+                    ),
+                    trailing: Switch(
+                      value: provider.notificationsEnabled,
+                      onChanged: (v) => provider.toggleNotifications(v),
+                      activeTrackColor: AppColors.primaryGreen,
+                    ),
+                  ),
+                  if (provider.notificationsEnabled)
+                    ListTile(
+                      leading: const Icon(
+                        Icons.access_time_rounded,
+                        color: AppColors.goldAccent,
+                      ),
+                      title: Text(
+                        'Waktu tintinol',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                      ),
+                      subtitle: Text(
+                        'Heure : ${provider.notifTime.format(context)}',
+                        style: GoogleFonts.poppins(fontSize: 12),
+                      ),
+                      trailing: const Icon(
+                        Icons.chevron_right,
+                        color: AppColors.primaryGreen,
+                      ),
+                      onTap: () async {
+                        final picked = await showTimePicker(
+                          context: context,
+                          initialTime: provider.notifTime,
+                        );
+                        if (picked != null) {
+                          await provider.setNotifTime(picked);
+                        }
+                      },
+                    ),
+                ],
+              ),
+            ),
+
+            const IslamicDivider(),
+
             // === FONT SIZE ===
             _buildSectionTitle(context, 'Mawnugol Binndi', 'Taille de police'),
             const SizedBox(height: 12),
