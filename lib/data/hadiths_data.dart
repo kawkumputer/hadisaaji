@@ -1,13 +1,15 @@
 import '../models/hadith.dart';
+import '../config/supabase_config.dart';
 
 const String defaultAuthor =
     'Dr Ahmad Abdullaahi Al-Haniyi, imaaraat/ Tellindo/ Ceerno Usmaan Jam Maalik Bah/Firo Abuu Sih';
 
 final List<Hadith> allHadiths = [
   // === CHAPITRE: Ɗomka Yahii Kaɗi Ɗaɗi Leppii ===
-  const Hadith(
+  Hadith(
     id: 1,
     chapterTitle: 'Ɗomka Yahii Kaɗi Ɗaɗi Leppii',
+    audioUrl: SupabaseConfig.audioUrl('hadiis_1.mpeg'),
     arabicText:
         'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ\n\n'
         '١ - قَالَ رَسُولُ اللَّهِ ﷺ: «لَا يَزَالُ النَّاسُ بِخَيْرٍ مَا عَجَّلُوا الْفِطْرَ»\n\n'
@@ -26,9 +28,10 @@ final List<Hadith> allHadiths = [
   ),
 
   // === CHAPITRE: Ɗanngal nder Suumayru (Koorka) ===
-  const Hadith(
+  Hadith(
     id: 2,
     chapterTitle: 'Ɗanngal nder Suumayru (Koorka)',
+    audioUrl: SupabaseConfig.audioUrl('hadiis_2.mp3'),
     arabicText:
         'الصِّيَامُ فِي السَّفَرِ\n\n'
         '﴿وَمَن كَانَ مَرِيضًا أَوْ عَلَىٰ سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ﴾ البقرة ١٨٥\n\n'

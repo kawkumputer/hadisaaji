@@ -8,6 +8,7 @@ class Hadith {
   final String? note;
   final String category;
   final String author;
+  final String? audioUrl;
 
   const Hadith({
     required this.id,
@@ -19,6 +20,7 @@ class Hadith {
     this.note,
     required this.category,
     required this.author,
+    this.audioUrl,
   });
 }
 

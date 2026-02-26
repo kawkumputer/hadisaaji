@@ -6,6 +6,7 @@ import '../models/hadith.dart';
 import '../providers/hadith_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/islamic_decoration.dart';
+import '../widgets/audio_player_widget.dart';
 
 class HadithDetailScreen extends StatelessWidget {
   final Hadith hadith;
@@ -84,6 +85,12 @@ class HadithDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // === AUDIO PLAYER ===
+            if (hadith.audioUrl != null) ...[
+              const SizedBox(height: 16),
+              AudioPlayerWidget(audioUrl: hadith.audioUrl!),
+            ],
 
             const SizedBox(height: 20),
 
