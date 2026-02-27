@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/app_theme.dart';
 import '../widgets/islamic_decoration.dart';
 
@@ -205,6 +206,45 @@ class AboutScreen extends StatelessWidget {
                 const SizedBox(height: 8),
                 _buildPersonRow(context, Icons.email, 'Hamath Kan: kawkumputer@gmail.com'),
               ],
+            ),
+
+            const SizedBox(height: 12),
+
+            // Privacy policy
+            InkWell(
+              onTap: () => launchUrl(
+                Uri.parse('https://kawkumputer.github.io/hadisaaji/privacy-policy.html'),
+                mode: LaunchMode.externalApplication,
+              ),
+              borderRadius: BorderRadius.circular(16),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardTheme.color,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                    color: AppColors.goldAccent.withValues(alpha: 0.2),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.privacy_tip_outlined, color: AppColors.primaryGreen, size: 22),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'Politique de confidentialité',
+                        style: GoogleFonts.poppins(
+                          fontSize: 14,
+                          color: AppColors.primaryGreen,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Icon(Icons.open_in_new, color: AppColors.textLight, size: 18),
+                  ],
+                ),
+              ),
             ),
 
             const SizedBox(height: 30),
