@@ -277,12 +277,14 @@ class AboutScreen extends StatelessWidget {
             children: [
               Icon(icon, color: AppColors.primaryGreen, size: 22),
               const SizedBox(width: 8),
-              Text(
-                title,
-                style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.primaryGreen,
+              Expanded(
+                child: Text(
+                  title,
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.primaryGreen,
+                  ),
                 ),
               ),
             ],

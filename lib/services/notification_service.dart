@@ -58,6 +58,9 @@ class NotificationService {
       scheduled = scheduled.add(const Duration(days: 1));
     }
 
+    // Annuler l'ancienne notification avant d'en planifier une nouvelle
+    await _plugin.cancel(_dailyNotifId);
+
     const androidDetails = AndroidNotificationDetails(
       'hadith_daily',
       'Hadiis Ñalngu',
@@ -70,17 +73,21 @@ class NotificationService {
 
     const details = NotificationDetails(android: androidDetails);
 
-    await _plugin.zonedSchedule(
-      _dailyNotifId,
-      title,
-      body,
-      scheduled,
-      details,
-      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-    );
+    try {
+      await _plugin.zonedSchedule(
+        _dailyNotifId,
+        title,
+        body,
+        scheduled,
+        details,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        matchDateTimeComponents: DateTimeComponents.time,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    } catch (e) {
+      // Silently fail if scheduling doesn't work
+    }
   }
 
   static Future<void> cancelDailyHadith() async {
@@ -103,6 +110,11 @@ class NotificationService {
         AndroidFlutterLocalNotificationsPlugin>();
     if (android != null) {
       await android.requestNotificationsPermission();
+      try {
+        await android.requestExactAlarmsPermission();
+      } catch (e) {
+        // Exact alarm not available on this device
+      }
     }
   }
 }
