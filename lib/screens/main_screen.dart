@@ -4,6 +4,7 @@ import 'home_screen.dart';
 import 'hadiths_list_screen.dart';
 import 'favorites_screen.dart';
 import 'settings_screen.dart';
+import 'about_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,6 +21,7 @@ class _MainScreenState extends State<MainScreen> {
     HadithsListScreen(),
     FavoritesScreen(),
     SettingsScreen(),
+    AboutScreen(),
   ];
 
   @override
@@ -40,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           onTap: (index) => setState(() => _currentIndex = index),
           selectedLabelStyle: GoogleFonts.poppins(
@@ -67,6 +70,11 @@ class _MainScreenState extends State<MainScreen> {
               icon: Icon(Icons.settings_outlined),
               activeIcon: Icon(Icons.settings),
               label: 'Teelto',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info_outline),
+              activeIcon: Icon(Icons.info),
+              label: 'Baɗte',
             ),
           ],
         ),

@@ -29,7 +29,7 @@ class HadithsListScreen extends StatelessWidget {
                 onChanged: provider.setSearchQuery,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  hintText: 'Yiylo hadiis... (Rechercher)',
+                  hintText: 'Yiylo hadiis...',
                   hintStyle:
                       TextStyle(color: Colors.white.withValues(alpha: 0.6)),
                   prefixIcon: Icon(Icons.search,

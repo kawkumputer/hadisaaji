@@ -2,7 +2,7 @@ import '../models/hadith.dart';
 import '../config/supabase_config.dart';
 
 const String defaultAuthor =
-    'Dr Ahmad Abdullaahi Al-Haniyi, imaaraat/ Tellindo/ Ceerno Usmaan Jam Maalik Bah/Firo Abuu Sih';
+    'Dr Ahmad Abdullaahi Al-Haniyi, imaaraat/ Tellinɗo/ Ceerno Usmaan Jam Maalik Bah/Firo Abuu Sih';
 
 final List<Hadith> allHadiths = [
   // === CHAPITRE: Ɗomka Yahii Kaɗi Ɗaɗi Leppii ===
@@ -73,7 +73,7 @@ final List<HadithCategory> categories = [
   const HadithCategory(
     name: 'Sakkude',
     nameArabic: 'الزكاة',
-    icon: '🤲',
+    icon: '💰',
     count: 0,
   ),
   const HadithCategory(

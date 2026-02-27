@@ -65,7 +65,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = 'Horiima loowde audio';
+        _errorMessage = 'Horiima loowde sawtowol ngol';
       });
     }
   }
