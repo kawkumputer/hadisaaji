@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hadisaaji - Play Store Mockups Generator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; background: #111; padding: 30px; }
+        h1 { color: #fff; text-align: center; margin-bottom: 8px; }
+        .info { color: #aaa; text-align: center; margin-bottom: 30px; font-size: 14px; }
+        .controls { text-align: center; margin-bottom: 30px; }
+        .controls button {
+            background: #0D7C5F; color: white; border: none; padding: 12px 30px;
+            border-radius: 8px; font-size: 16px; cursor: pointer; margin: 5px;
+        }
+        .controls button:hover { background: #0a6650; }
+        .mockups { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; }
+
+        .mockup-wrapper { position: relative; }
+
+        canvas { border-radius: 16px; }
+
+        .download-btn {
+            display: block; margin: 8px auto 0; background: #B8860B; color: white;
+            border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📱 Hadisaaji — Mockups Play Store</h1>
+    <p class="info">Cliquez sur "Générer tout" puis téléchargez chaque image (1080x1920 — format Play Store)</p>
+
+    <div class="controls">
+        <button onclick="generateAll()">🎨 Générer tout</button>
+    </div>
+
+    <div class="mockups" id="mockups"></div>
+
+    <script>
+        const SCREENS = [
+            {
+                file: 'screen_home.png',
+                title: 'Hadiis Ñalngu',
+                subtitle: 'Le Hadith du Jour',
+                gradient: ['#0D7C5F', '#064E3F'],
+            },
+            {
+                file: 'screen_home2.png',
+                title: 'Pecce / Catégories',
+                subtitle: 'Explorez par thème',
+                gradient: ['#1B4332', '#081C15'],
+            },
+            {
+                file: 'screen_list.png',
+                title: 'Hadiisaaji',
+                subtitle: 'Collection complète',
+                gradient: ['#2D6A4F', '#1B4332'],
+            },
+            {
+                file: 'screen_detail.png',
+                title: 'Binndol Arab',
+                subtitle: 'Texte arabe original',
+                gradient: ['#B8860B', '#8B6508'],
+            },
+            {
+                file: 'screen_detail_pulaar.png',
+                title: 'Firo e Pulaar',
+                subtitle: 'Traduction en Pulaar',
+                gradient: ['#0A6E5C', '#054A3E'],
+            },
+            {
+                file: 'screen_settings.png',
+                title: 'Teelto',
+                subtitle: 'Notifications & préférences',
+                gradient: ['#40916C', '#2D6A4F'],
+            },
+            {
+                file: 'screen_about.png',
+                title: 'Baɗte App',
+                subtitle: 'Crédits & contact',
+                gradient: ['#52796F', '#354F52'],
+            },
+        ];
+
+        const W = 1080;
+        const H = 1920;
+        const PHONE_W = 680;
+        const PHONE_H = 1360;
+        const PHONE_X = (W - PHONE_W) / 2;
+        const PHONE_Y = 340;
+        const PHONE_R = 40;
+        const SCREEN_PAD = 14;
+
+        function roundRect(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
+        }
+
+        function drawMockup(canvas, img, screen) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = W;
+            canvas.height = H;
+
+            // Background gradient
+            const grad = ctx.createLinearGradient(0, 0, W, H);
+            grad.addColorStop(0, screen.gradient[0]);
+            grad.addColorStop(1, screen.gradient[1]);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+
+            // Subtle pattern dots
+            ctx.fillStyle = 'rgba(255,255,255,0.03)';
+            for (let i = 0; i < 200; i++) {
+                const x = Math.random() * W;
+                const y = Math.random() * H;
+                ctx.beginPath();
+                ctx.arc(x, y, Math.random() * 3 + 1, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Title text
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = 'bold 64px Segoe UI, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(screen.title, W / 2, 140);
+
+            // Subtitle
+            ctx.fillStyle = 'rgba(255,255,255,0.75)';
+            ctx.font = '36px Segoe UI, sans-serif';
+            ctx.fillText(screen.subtitle, W / 2, 200);
+
+            // App name badge
+            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            roundRect(ctx, W/2 - 120, 240, 240, 44, 22);
+            ctx.fill();
+            ctx.fillStyle = '#D4AF37';
+            ctx.font = 'bold 24px Segoe UI, sans-serif';
+            ctx.fillText('HADISAAJI', W / 2, 270);
+
+            // Phone frame shadow
+            ctx.shadowColor = 'rgba(0,0,0,0.4)';
+            ctx.shadowBlur = 40;
+            ctx.shadowOffsetY = 10;
+
+            // Phone frame
+            ctx.fillStyle = '#1a1a1a';
+            roundRect(ctx, PHONE_X, PHONE_Y, PHONE_W, PHONE_H, PHONE_R);
+            ctx.fill();
+
+            // Reset shadow
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetY = 0;
+
+            // Screen area (clipped)
+            ctx.save();
+            const sx = PHONE_X + SCREEN_PAD;
+            const sy = PHONE_Y + SCREEN_PAD;
+            const sw = PHONE_W - SCREEN_PAD * 2;
+            const sh = PHONE_H - SCREEN_PAD * 2;
+            roundRect(ctx, sx, sy, sw, sh, PHONE_R - 8);
+            ctx.clip();
+            ctx.drawImage(img, sx, sy, sw, sh);
+            ctx.restore();
+
+            // Notch
+            ctx.fillStyle = '#1a1a1a';
+            roundRect(ctx, W/2 - 60, PHONE_Y, 120, 28, 14);
+            ctx.fill();
+        }
+
+        function generateAll() {
+            const container = document.getElementById('mockups');
+            container.innerHTML = '';
+
+            SCREENS.forEach((screen, i) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'mockup-wrapper';
+
+                const canvas = document.createElement('canvas');
+                canvas.style.width = '320px';
+                canvas.style.height = '569px';
+                canvas.id = `canvas-${i}`;
+
+                const btn = document.createElement('button');
+                btn.className = 'download-btn';
+                btn.textContent = `⬇️ ${screen.title}`;
+                btn.onclick = () => downloadCanvas(canvas, `hadisaaji_${i + 1}_${screen.file.replace('.png', '')}.png`);
+
+                wrapper.appendChild(canvas);
+                wrapper.appendChild(btn);
+                container.appendChild(wrapper);
+
+                const img = new Image();
+                img.onload = () => drawMockup(canvas, img, screen);
+                img.src = screen.file;
+            });
+        }
+
+        function downloadCanvas(canvas, filename) {
+            const dataUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = dataUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Auto-generate on load
+        window.onload = generateAll;
+    </script>
+</body>
+</html>

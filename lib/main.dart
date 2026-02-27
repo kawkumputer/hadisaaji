@@ -52,7 +52,7 @@ class HadisaajiApp extends StatelessWidget {
       child: Consumer<HadithProvider>(
         builder: (context, provider, _) {
           return MaterialApp(
-            title: 'Hadisaaji',
+            title: 'Hadisaaji Pulaar',
             navigatorKey: NotificationService.navigatorKey,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme(),

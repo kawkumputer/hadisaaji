@@ -163,7 +163,7 @@ class HadithDetailScreen extends StatelessWidget {
             // === EXPLANATION ===
             if (hadith.explanation != null) ...[
               const IslamicDivider(),
-              _buildSectionHeader(context, 'Tinndol', 'الشرح'),
+              _buildSectionHeader(context, 'Facciro', 'الشرح'),
               const SizedBox(height: 10),
               Container(
                 width: double.infinity,
