@@ -118,6 +118,14 @@ class HadithProvider extends ChangeNotifier {
 
   bool isFavorite(int hadithId) => _favoriteIds.contains(hadithId);
 
+  Hadith? getHadithById(int id) {
+    try {
+      return _hadiths.firstWhere((h) => h.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> setArabicFontSize(double size) async {
     _arabicFontSize = size;
     final prefs = await SharedPreferences.getInstance();
@@ -172,6 +180,7 @@ class HadithProvider extends ChangeNotifier {
       body: '${hadith.chapterTitle}\n${hadith.pulaarTranslation.substring(0, hadith.pulaarTranslation.length.clamp(0, 100))}...',
       hour: _notifHour,
       minute: _notifMinute,
+      hadithId: hadith.id,
     );
   }
 

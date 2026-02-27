@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -8,10 +9,14 @@ class NotificationService {
   static final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
 
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   static const String _enabledKey = 'daily_notification_enabled';
   static const String _hourKey = 'daily_notification_hour';
   static const String _minuteKey = 'daily_notification_minute';
   static const int _dailyNotifId = 100;
+
+  static void Function(int hadithId)? onNotificationTap;
 
   static Future<void> init() async {
     tz.initializeTimeZones();
@@ -23,7 +28,31 @@ class NotificationService {
 
     const initSettings = InitializationSettings(android: androidSettings);
 
-    await _plugin.initialize(initSettings);
+    await _plugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: _onNotificationResponse,
+    );
+
+    // Vérifier si l'app a été lancée via une notification
+    final launchDetails = await _plugin.getNotificationAppLaunchDetails();
+    if (launchDetails?.didNotificationLaunchApp == true &&
+        launchDetails!.notificationResponse != null) {
+      _pendingPayload = launchDetails.notificationResponse!.payload;
+    }
+  }
+
+  static String? _pendingPayload;
+  static String? get pendingPayload => _pendingPayload;
+  static void clearPendingPayload() => _pendingPayload = null;
+
+  static void _onNotificationResponse(NotificationResponse response) {
+    final payload = response.payload;
+    if (payload != null && onNotificationTap != null) {
+      final hadithId = int.tryParse(payload);
+      if (hadithId != null) {
+        onNotificationTap!(hadithId);
+      }
+    }
   }
 
   static Future<bool> get isEnabled async {
@@ -46,6 +75,7 @@ class NotificationService {
     required String body,
     int? hour,
     int? minute,
+    int? hadithId,
   }) async {
     final h = hour ?? await notifHour;
     final m = minute ?? await notifMinute;
@@ -84,6 +114,7 @@ class NotificationService {
         matchDateTimeComponents: DateTimeComponents.time,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
+        payload: hadithId?.toString(),
       );
     } catch (e) {
       // Silently fail if scheduling doesn't work

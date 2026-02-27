@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import '../providers/hadith_provider.dart';
+import '../services/notification_service.dart';
 import '../theme/app_theme.dart';
 import 'main_screen.dart';
+import 'hadith_detail_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -52,6 +56,29 @@ class _SplashScreenState extends State<SplashScreen>
             transitionDuration: const Duration(milliseconds: 800),
           ),
         );
+
+        // Si l'app a été lancée via une notification, ouvrir le hadith
+        final payload = NotificationService.pendingPayload;
+        if (payload != null) {
+          final hadithId = int.tryParse(payload);
+          if (hadithId != null) {
+            final provider = context.read<HadithProvider>();
+            final hadith = provider.getHadithById(hadithId);
+            if (hadith != null) {
+              Future.delayed(const Duration(milliseconds: 500), () {
+                NotificationService.navigatorKey.currentState?.push(
+                  MaterialPageRoute(
+                    builder: (_) => ChangeNotifierProvider.value(
+                      value: provider,
+                      child: HadithDetailScreen(hadith: hadith),
+                    ),
+                  ),
+                );
+              });
+            }
+          }
+          NotificationService.clearPendingPayload();
+        }
       }
     });
   }
