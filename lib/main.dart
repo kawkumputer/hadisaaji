@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'config/supabase_config.dart';
 import 'providers/hadith_provider.dart';
 import 'services/notification_service.dart';
@@ -26,6 +28,17 @@ void main() async {
     debugPrint('[main] NotificationService init error: $e');
   }
 
+  // Configure audio session for iOS
+  if (Platform.isIOS) {
+    final audioContext = AudioContext(
+      iOS: AudioContextIOS(
+        category: AVAudioSessionCategory.playback,
+        options: {AVAudioSessionOptions.defaultToSpeaker},
+      ),
+    );
+    AudioPlayer.global.setAudioContext(audioContext);
+  }
+
   final hadithProvider = HadithProvider();
   await hadithProvider.init();
 
@@ -38,14 +51,17 @@ void main() async {
   NotificationService.onNotificationTap = (hadithId) {
     final hadith = hadithProvider.getHadithById(hadithId);
     if (hadith != null) {
-      NotificationService.navigatorKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (_) => ChangeNotifierProvider.value(
-            value: hadithProvider,
-            child: HadithDetailScreen(hadith: hadith),
+      // Attendre que le navigator soit prêt
+      Future.delayed(const Duration(milliseconds: 500), () {
+        NotificationService.navigatorKey.currentState?.push(
+          MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider.value(
+              value: hadithProvider,
+              child: HadithDetailScreen(hadith: hadith),
+            ),
           ),
-        ),
-      );
+        );
+      });
     }
   };
 

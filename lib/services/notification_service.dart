@@ -56,10 +56,14 @@ class NotificationService {
 
   static void _onNotificationResponse(NotificationResponse response) {
     final payload = response.payload;
-    if (payload != null && onNotificationTap != null) {
+    if (payload != null) {
       final hadithId = int.tryParse(payload);
       if (hadithId != null) {
-        onNotificationTap!(hadithId);
+        if (onNotificationTap != null) {
+          onNotificationTap!(hadithId);
+        } else {
+          _pendingPayload = payload;
+        }
       }
     }
   }
