@@ -26,7 +26,16 @@ class NotificationService {
     const androidSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const initSettings = InitializationSettings(android: androidSettings);
+    const darwinSettings = DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
+
+    const initSettings = InitializationSettings(
+      android: androidSettings,
+      iOS: darwinSettings,
+    );
 
     await _plugin.initialize(
       initSettings,
@@ -101,7 +110,16 @@ class NotificationService {
       styleInformation: BigTextStyleInformation(''),
     );
 
-    const details = NotificationDetails(android: androidDetails);
+    const darwinDetails = DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+    );
+
+    const details = NotificationDetails(
+      android: androidDetails,
+      iOS: darwinDetails,
+    );
 
     try {
       await _plugin.zonedSchedule(
@@ -161,6 +179,16 @@ class NotificationService {
           AndroidFlutterLocalNotificationsPlugin>();
       if (android != null) {
         await android.requestNotificationsPermission();
+      }
+
+      final iOS = _plugin.resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin>();
+      if (iOS != null) {
+        await iOS.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
       }
     } catch (e) {
       debugPrint('[NotificationService] requestPermissions error: $e');

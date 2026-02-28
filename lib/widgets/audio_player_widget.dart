@@ -63,6 +63,8 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         setState(() => _isLoading = false);
       }
     } catch (e) {
+      debugPrint('[AudioPlayer] Error: $e');
+      debugPrint('[AudioPlayer] URL: ${widget.audioUrl}');
       setState(() {
         _isLoading = false;
         _errorMessage = 'Horiima loowde sawtowol ngol';
