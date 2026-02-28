@@ -52,8 +52,10 @@ class HadithProvider extends ChangeNotifier {
 
   Hadith get hadithOfTheDay {
     if (_hadiths.isEmpty) return allHadiths.first;
-    final dayOfYear = DateTime.now().difference(DateTime(DateTime.now().year, 1, 1)).inDays;
-    return _hadiths[dayOfYear % _hadiths.length];
+    final now = DateTime.now();
+    final seed = now.year * 1000 + now.difference(DateTime(now.year, 1, 1)).inDays;
+    final random = Random(seed);
+    return _hadiths[random.nextInt(_hadiths.length)];
   }
 
   Hadith get randomHadith {
@@ -66,25 +68,33 @@ class HadithProvider extends ChangeNotifier {
     // Charger les données locales d'abord (affichage instantané)
     _hadiths = List.from(allHadiths);
     _categories = List.from(categories);
-    await _loadPreferences();
+    try {
+      await _loadPreferences();
+    } catch (e) {
+      debugPrint('[HadithProvider] loadPreferences error: $e');
+    }
     notifyListeners();
 
-    // Puis charger depuis Supabase en arrière-plan
-    await refreshFromSupabase();
+    // Puis charger depuis Supabase en arrière-plan (non-bloquant)
+    refreshFromSupabase().catchError((e) {
+      debugPrint('[HadithProvider] refreshFromSupabase error: $e');
+    });
   }
 
   Future<void> refreshFromSupabase() async {
     try {
-      final remoteHadiths = await SupabaseService.fetchHadiths();
+      final remoteHadiths = await SupabaseService.fetchHadiths()
+          .timeout(const Duration(seconds: 10));
       if (remoteHadiths.isNotEmpty) {
         _hadiths = remoteHadiths;
       }
-      final remoteCats = await SupabaseService.fetchCategories();
+      final remoteCats = await SupabaseService.fetchCategories()
+          .timeout(const Duration(seconds: 10));
       if (remoteCats.isNotEmpty) {
         _categories = remoteCats;
       }
     } catch (e) {
-      // Silencieux — on garde les données locales/cache
+      debugPrint('[HadithProvider] Supabase fetch error: $e');
     } finally {
       _isLoading = false;
       notifyListeners();

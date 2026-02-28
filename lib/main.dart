@@ -11,16 +11,28 @@ import 'screens/hadith_detail_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: SupabaseConfig.projectUrl,
-    anonKey: SupabaseConfig.anonKey,
-  );
+  try {
+    await Supabase.initialize(
+      url: SupabaseConfig.projectUrl,
+      anonKey: SupabaseConfig.anonKey,
+    );
+  } catch (e) {
+    debugPrint('[main] Supabase init error: $e');
+  }
 
-  await NotificationService.init();
+  try {
+    await NotificationService.init();
+  } catch (e) {
+    debugPrint('[main] NotificationService init error: $e');
+  }
 
   final hadithProvider = HadithProvider();
   await hadithProvider.init();
-  await hadithProvider.initNotifications();
+
+  // Lancer les notifications en arrière-plan (non-bloquant)
+  hadithProvider.initNotifications().catchError((e) {
+    debugPrint('[main] initNotifications error: $e');
+  });
 
   // Configurer le callback quand on clique sur une notification
   NotificationService.onNotificationTap = (hadithId) {

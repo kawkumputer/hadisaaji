@@ -110,7 +110,7 @@ class NotificationService {
         body,
         scheduled,
         details,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
@@ -136,16 +136,34 @@ class NotificationService {
     await prefs.setInt(_minuteKey, minute);
   }
 
+  /// Envoie une notification immédiate pour tester
+  static Future<void> showTestNotification() async {
+    const androidDetails = AndroidNotificationDetails(
+      'hadith_daily',
+      'Hadiis Ñalngu',
+      channelDescription: 'Notification quotidienne du hadith du jour',
+      importance: Importance.high,
+      priority: Priority.high,
+      icon: '@mipmap/ic_launcher',
+    );
+    const details = NotificationDetails(android: androidDetails);
+    await _plugin.show(
+      0,
+      '📖 Hadiis Ñalngu Hannde',
+      'Test notification - Hadisaaji fonctionne !',
+      details,
+    );
+  }
+
   static Future<void> requestPermissions() async {
-    final android = _plugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
-    if (android != null) {
-      await android.requestNotificationsPermission();
-      try {
-        await android.requestExactAlarmsPermission();
-      } catch (e) {
-        // Exact alarm not available on this device
+    try {
+      final android = _plugin.resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>();
+      if (android != null) {
+        await android.requestNotificationsPermission();
       }
+    } catch (e) {
+      debugPrint('[NotificationService] requestPermissions error: $e');
     }
   }
 }

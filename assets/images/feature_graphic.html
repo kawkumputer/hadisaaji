@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head><title>Feature Graphic 1024x500</title></head>
+<body style="margin:0;background:#111;display:flex;justify-content:center;align-items:center;height:100vh;">
+<canvas id="canvas" width="1024" height="500"></canvas>
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const W = 1024, H = 500;
+
+// Background gradient
+const grad = ctx.createLinearGradient(0, 0, W, H);
+grad.addColorStop(0, '#0D7C66');
+grad.addColorStop(1, '#064E3F');
+ctx.fillStyle = grad;
+ctx.fillRect(0, 0, W, H);
+
+// Subtle pattern
+ctx.fillStyle = 'rgba(255,255,255,0.02)';
+for (let i = 0; i < 150; i++) {
+    ctx.beginPath();
+    ctx.arc(Math.random()*W, Math.random()*H, Math.random()*4+1, 0, Math.PI*2);
+    ctx.fill();
+}
+
+// Decorative border
+ctx.strokeStyle = 'rgba(200,169,81,0.3)';
+ctx.lineWidth = 2;
+ctx.strokeRect(20, 20, W-40, H-40);
+
+// Corner ornaments
+const ornSize = 30;
+ctx.strokeStyle = 'rgba(212,175,55,0.5)';
+ctx.lineWidth = 2;
+[[25,25,1,1],[W-25,25,-1,1],[25,H-25,1,-1],[W-25,H-25,-1,-1]].forEach(([x,y,dx,dy]) => {
+    ctx.beginPath();
+    ctx.moveTo(x, y + dy*ornSize);
+    ctx.lineTo(x, y);
+    ctx.lineTo(x + dx*ornSize, y);
+    ctx.stroke();
+});
+
+// Star divider
+ctx.fillStyle = '#D4AF37';
+ctx.font = '18px serif';
+ctx.textAlign = 'center';
+ctx.fillText('✦', W/2, 80);
+
+// Arabic title
+ctx.fillStyle = '#D4AF37';
+ctx.font = 'bold 60px serif';
+ctx.textAlign = 'center';
+ctx.fillText('أحاديث', W/2, 160);
+
+// App name
+ctx.fillStyle = '#FFFFFF';
+ctx.font = 'bold 52px Segoe UI, sans-serif';
+ctx.fillText('HADISAAJI PULAAR', W/2, 240);
+
+// Divider line
+ctx.strokeStyle = 'rgba(212,175,55,0.6)';
+ctx.lineWidth = 1.5;
+ctx.beginPath();
+ctx.moveTo(W/2 - 150, 270);
+ctx.lineTo(W/2 - 20, 270);
+ctx.stroke();
+ctx.beginPath();
+ctx.moveTo(W/2 + 20, 270);
+ctx.lineTo(W/2 + 150, 270);
+ctx.stroke();
+ctx.fillStyle = '#D4AF37';
+ctx.font = '14px serif';
+ctx.fillText('✦', W/2, 275);
+
+// Subtitle
+ctx.fillStyle = 'rgba(255,255,255,0.85)';
+ctx.font = '24px Segoe UI, sans-serif';
+ctx.fillText('Njangtuuji nulaaɗo Alla (jkm) ﷺ', W/2, 320);
+
+ctx.fillStyle = 'rgba(212,175,55,0.8)';
+ctx.font = 'italic 20px Segoe UI, sans-serif';
+ctx.fillText('Firo e ɗemngal Pulaar', W/2, 355);
+
+// Features row
+const features = ['📖 Hadiis Ñalngu', '🔊 Heɗto Audio', '📝 Firo Pulaar', '🔔 Tintinol'];
+const startX = W/2 - (features.length * 130) / 2 + 65;
+ctx.font = '16px Segoe UI, sans-serif';
+ctx.fillStyle = 'rgba(255,255,255,0.7)';
+features.forEach((f, i) => {
+    ctx.fillText(f, startX + i * 130, 430);
+});
+
+// Bottom star
+ctx.fillStyle = 'rgba(212,175,55,0.4)';
+ctx.font = '14px serif';
+ctx.fillText('✦', W/2, 470);
+
+// Auto download
+const link = document.createElement('a');
+link.download = 'feature_graphic_1024x500.png';
+link.href = canvas.toDataURL('image/png');
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+</script>
+</body>
+</html>
