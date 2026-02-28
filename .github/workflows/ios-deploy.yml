@@ -58,7 +58,12 @@ jobs:
           echo "Installed provisioning profile with UUID: $UUID"
 
       - name: Build iOS app
-        run: flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+        run: |
+          flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+          echo "=== Build output ==="
+          find build/ios -name '*.ipa' -type f 2>/dev/null || echo "No IPA in build/ios"
+          find build -name '*.ipa' -type f 2>/dev/null || echo "No IPA anywhere in build"
+          ls -R build/ios/ipa/ 2>/dev/null || echo "build/ios/ipa/ does not exist"
 
       - name: Upload to App Store Connect
         env:
@@ -66,7 +71,6 @@ jobs:
           APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
         shell: bash
         run: |
-          # Key ID is not sensitive, hardcode to avoid GitHub masking issues
           KEY_ID="S4DMCPPBB4"
           mkdir -p "$HOME/private_keys"
           KEY_FILE="$HOME/private_keys/AuthKey_${KEY_ID}.p8"
@@ -74,13 +78,18 @@ jobs:
           # Decode API key
           printenv APP_STORE_CONNECT_API_KEY_BASE64 | base64 --decode > "$KEY_FILE"
 
-          # Debug: verify the key file
-          echo "Key file:"
+          # Verify key file
+          echo "Key file first line:"
           head -1 "$KEY_FILE"
-          ls -la "$KEY_FILE"
 
           # Find the IPA
-          IPA_PATH=$(find build -name '*.ipa' -type f | head -1)
+          IPA_PATH=$(find "$GITHUB_WORKSPACE" -name '*.ipa' -type f 2>/dev/null | head -1)
+          if [ -z "$IPA_PATH" ]; then
+            echo "ERROR: No IPA found! Listing build directory:"
+            find build -type f -name '*.ipa' -o -name '*.xcarchive' 2>/dev/null
+            ls -R build/ios/ 2>/dev/null
+            exit 1
+          fi
           echo "IPA found at: $IPA_PATH"
 
           xcrun altool --upload-app \
