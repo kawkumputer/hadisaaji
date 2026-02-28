@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +25,17 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   void initState() {
     super.initState();
     _setupListeners();
+  }
+
+  Future<void> _configureAudioSession() async {
+    if (Platform.isIOS) {
+      await _player.setAudioContext(AudioContext(
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.playback,
+          options: {AVAudioSessionOptions.mixWithOthers},
+        ),
+      ));
+    }
   }
 
   void _setupListeners() {
@@ -59,6 +71,8 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         await _player.pause();
       } else {
         setState(() => _isLoading = true);
+        await _configureAudioSession();
+        debugPrint('[AudioPlayer] Playing URL: ${widget.audioUrl}');
         await _player.play(UrlSource(widget.audioUrl));
         setState(() => _isLoading = false);
       }

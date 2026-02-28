@@ -28,6 +28,14 @@ class Hadith {
 
   factory Hadith.fromJson(Map<String, dynamic> json) {
     final audioFile = json['audio_url'] as String?;
+    String? resolvedAudioUrl;
+    if (audioFile != null) {
+      if (audioFile.startsWith('http')) {
+        resolvedAudioUrl = audioFile;
+      } else {
+        resolvedAudioUrl = SupabaseConfig.audioUrl(audioFile);
+      }
+    }
     return Hadith(
       id: json['id'] as int,
       chapterTitle: json['chapter_title'] as String,
@@ -38,9 +46,7 @@ class Hadith {
       note: json['note'] as String?,
       category: json['category'] as String,
       author: json['author'] as String,
-      audioUrl: audioFile != null
-          ? SupabaseConfig.audioUrl(audioFile)
-          : null,
+      audioUrl: resolvedAudioUrl,
     );
   }
 

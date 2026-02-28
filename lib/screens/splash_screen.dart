@@ -46,6 +46,9 @@ class _SplashScreenState extends State<SplashScreen>
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
+        final provider = context.read<HadithProvider>();
+        final payload = NotificationService.pendingPayload;
+
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
@@ -58,14 +61,12 @@ class _SplashScreenState extends State<SplashScreen>
         );
 
         // Si l'app a été lancée via une notification, ouvrir le hadith
-        final payload = NotificationService.pendingPayload;
         if (payload != null) {
           final hadithId = int.tryParse(payload);
           if (hadithId != null) {
-            final provider = context.read<HadithProvider>();
             final hadith = provider.getHadithById(hadithId);
             if (hadith != null) {
-              Future.delayed(const Duration(milliseconds: 500), () {
+              Future.delayed(const Duration(milliseconds: 1000), () {
                 NotificationService.navigatorKey.currentState?.push(
                   MaterialPageRoute(
                     builder: (_) => ChangeNotifierProvider.value(
