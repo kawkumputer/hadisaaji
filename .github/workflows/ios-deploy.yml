@@ -65,22 +65,20 @@ jobs:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        shell: bash
         run: |
           # Place API key where altool expects it
-          KEY_ID="${APP_STORE_CONNECT_API_KEY_ID}"
+          KEY_ID="$APP_STORE_CONNECT_API_KEY_ID"
           mkdir -p "$HOME/private_keys"
-          
-          # Write base64 to temp file, then decode
-          printf '%s' "$APP_STORE_CONNECT_API_KEY_BASE64" > /tmp/key_b64.txt
-          base64 --decode < /tmp/key_b64.txt > "$HOME/private_keys/AuthKey_${KEY_ID}.p8"
-          rm /tmp/key_b64.txt
+          KEY_FILE="$HOME/private_keys/AuthKey_${KEY_ID}.p8"
+
+          # Decode API key using printenv to avoid shell expansion issues
+          printenv APP_STORE_CONNECT_API_KEY_BASE64 | base64 --decode -o "$KEY_FILE"
 
           # Debug: verify the key file
           echo "API Key ID: $KEY_ID"
-          echo "API Key file contents (first line):"
-          head -1 "$HOME/private_keys/AuthKey_${KEY_ID}.p8"
-          echo "API Key file size:"
-          ls -la "$HOME/private_keys/AuthKey_${KEY_ID}.p8"
+          head -1 "$KEY_FILE"
+          ls -la "$KEY_FILE"
 
           # Find the IPA
           IPA_PATH=$(find build -name '*.ipa' -type f | head -1)
