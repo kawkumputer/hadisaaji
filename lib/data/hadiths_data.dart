@@ -9,7 +9,7 @@ final List<Hadith> allHadiths = [
   Hadith(
     id: 1,
     chapterTitle: 'Ɗomka Yahii Kaɗi Ɗaɗi Leppii',
-    audioUrl: SupabaseConfig.audioUrl('hadiis_1.mpeg'),
+    audioUrl: SupabaseConfig.audioUrl('hadiis_1.mp3'),
     arabicText:
         'ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ\n\n'
         '١ - قَالَ رَسُولُ اللَّهِ ﷺ: «لَا يَزَالُ النَّاسُ بِخَيْرٍ مَا عَجَّلُوا الْفِطْرَ»\n\n'
