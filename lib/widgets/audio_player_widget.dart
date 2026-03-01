@@ -1,6 +1,9 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
 import '../theme/app_theme.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
@@ -50,6 +53,22 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     });
   }
 
+  /// Downloads audio file to local cache (iOS workaround for wrong MIME type)
+  Future<File> _downloadAudio(String url) async {
+    final dir = await getTemporaryDirectory();
+    final fileName = Uri.parse(url).pathSegments.last;
+    final file = File('${dir.path}/$fileName');
+    // Use cached file if already downloaded
+    if (await file.exists()) {
+      debugPrint('[AudioPlayer] Using cached file: ${file.path}');
+      return file;
+    }
+    debugPrint('[AudioPlayer] Downloading to: ${file.path}');
+    final response = await http.get(Uri.parse(url));
+    await file.writeAsBytes(response.bodyBytes);
+    return file;
+  }
+
   @override
   void dispose() {
     _player.dispose();
@@ -65,7 +84,15 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         if (!_initialized) {
           setState(() => _isLoading = true);
           debugPrint('[AudioPlayer] Loading URL: ${widget.audioUrl}');
-          await _player.setUrl(widget.audioUrl);
+          if (Platform.isIOS) {
+            // iOS: download file first because Supabase returns
+            // Content-Type: video/mpeg for .mpeg files, which
+            // iOS AVPlayer rejects with error -11828
+            final file = await _downloadAudio(widget.audioUrl);
+            await _player.setFilePath(file.path);
+          } else {
+            await _player.setUrl(widget.audioUrl);
+          }
           _initialized = true;
           setState(() => _isLoading = false);
         }
