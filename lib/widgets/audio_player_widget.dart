@@ -1,6 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/app_theme.dart';
 
@@ -14,45 +13,38 @@ class AudioPlayerWidget extends StatefulWidget {
 }
 
 class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
-  final AudioPlayer _player = AudioPlayer();
-  PlayerState _playerState = PlayerState.stopped;
+  late AudioPlayer _player;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
+  bool _isPlaying = false;
   bool _isLoading = false;
   String? _errorMessage;
+  bool _initialized = false;
 
   @override
   void initState() {
     super.initState();
+    _player = AudioPlayer();
     _setupListeners();
   }
 
-  Future<void> _configureAudioSession() async {
-    if (Platform.isIOS) {
-      await _player.setAudioContext(AudioContext(
-        iOS: AudioContextIOS(
-          category: AVAudioSessionCategory.playback,
-          options: {AVAudioSessionOptions.mixWithOthers},
-        ),
-      ));
-    }
-  }
-
   void _setupListeners() {
-    _player.onPlayerStateChanged.listen((state) {
-      if (mounted) setState(() => _playerState = state);
+    _player.durationStream.listen((duration) {
+      if (mounted && duration != null) setState(() => _duration = duration);
     });
-    _player.onDurationChanged.listen((duration) {
-      if (mounted) setState(() => _duration = duration);
-    });
-    _player.onPositionChanged.listen((position) {
+    _player.positionStream.listen((position) {
       if (mounted) setState(() => _position = position);
     });
-    _player.onPlayerComplete.listen((_) {
+    _player.playerStateStream.listen((state) {
       if (mounted) {
         setState(() {
-          _position = Duration.zero;
-          _playerState = PlayerState.stopped;
+          _isPlaying = state.playing;
+          if (state.processingState == ProcessingState.completed) {
+            _isPlaying = false;
+            _position = Duration.zero;
+            _player.seek(Duration.zero);
+            _player.pause();
+          }
         });
       }
     });
@@ -67,14 +59,17 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   Future<void> _playPause() async {
     try {
       setState(() => _errorMessage = null);
-      if (_playerState == PlayerState.playing) {
+      if (_isPlaying) {
         await _player.pause();
       } else {
-        setState(() => _isLoading = true);
-        await _configureAudioSession();
-        debugPrint('[AudioPlayer] Playing URL: ${widget.audioUrl}');
-        await _player.play(UrlSource(widget.audioUrl));
-        setState(() => _isLoading = false);
+        if (!_initialized) {
+          setState(() => _isLoading = true);
+          debugPrint('[AudioPlayer] Loading URL: ${widget.audioUrl}');
+          await _player.setUrl(widget.audioUrl);
+          _initialized = true;
+          setState(() => _isLoading = false);
+        }
+        await _player.play();
       }
     } catch (e) {
       debugPrint('[AudioPlayer] Error: $e');
@@ -94,7 +89,7 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final isPlaying = _playerState == PlayerState.playing;
+    final isPlaying = _isPlaying;
     final progress = _duration.inMilliseconds > 0
         ? _position.inMilliseconds / _duration.inMilliseconds
         : 0.0;
