@@ -71,12 +71,13 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         }
         await _player.play();
       }
-    } catch (e) {
+    } catch (e, stack) {
       debugPrint('[AudioPlayer] Error: $e');
+      debugPrint('[AudioPlayer] Stack: $stack');
       debugPrint('[AudioPlayer] URL: ${widget.audioUrl}');
       setState(() {
         _isLoading = false;
-        _errorMessage = 'Horiima loowde sawtowol ngol';
+        _errorMessage = 'Juumre: ${e.toString().length > 120 ? e.toString().substring(0, 120) : e.toString()}';
       });
     }
   }
