@@ -43,12 +43,18 @@ class HadithDetailScreen extends StatelessWidget {
             // Chapter Title
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
               decoration: BoxDecoration(
-                color: AppColors.redAccent.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
+                gradient: LinearGradient(
+                  colors: [
+                    AppColors.primaryGreen.withValues(alpha: 0.12),
+                    AppColors.goldAccent.withValues(alpha: 0.08),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                  color: AppColors.redAccent.withValues(alpha: 0.3),
+                  color: AppColors.primaryGreen.withValues(alpha: 0.25),
+                  width: 1.5,
                 ),
               ),
               child: Text(
@@ -57,7 +63,7 @@ class HadithDetailScreen extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.redAccent,
+                  color: AppColors.primaryGreen,
                 ),
               ),
             ),
