@@ -27,9 +27,9 @@ class NotificationService {
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
     const darwinSettings = DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
     );
 
     const initSettings = InitializationSettings(
@@ -55,13 +55,16 @@ class NotificationService {
   static void clearPendingPayload() => _pendingPayload = null;
 
   static void _onNotificationResponse(NotificationResponse response) {
+    debugPrint('[NotificationService] onResponse type=${response.notificationResponseType} payload=${response.payload}');
     final payload = response.payload;
     if (payload != null) {
       final hadithId = int.tryParse(payload);
       if (hadithId != null) {
         if (onNotificationTap != null) {
+          debugPrint('[NotificationService] Calling onNotificationTap($hadithId)');
           onNotificationTap!(hadithId);
         } else {
+          debugPrint('[NotificationService] Storing pending payload: $payload');
           _pendingPayload = payload;
         }
       }
