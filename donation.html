@@ -108,11 +108,12 @@
         .wave-icon { background: linear-gradient(135deg, #1DC3F0, #0A9BD7); }
         .om-icon { background: linear-gradient(135deg, #FF6600, #E55500); }
         .paypal-icon { background: linear-gradient(135deg, #003087, #009CDE); }
-        .paypal-btn {
+        .bmc-icon { background: linear-gradient(135deg, #FFDD00, #FFB800); color: #000 !important; }
+        .bmc-btn {
             display: block;
             width: 100%;
-            background: linear-gradient(135deg, #003087, #009CDE);
-            color: #fff;
+            background: linear-gradient(135deg, #FFDD00, #FFB800);
+            color: #000;
             border: none;
             border-radius: 10px;
             padding: 14px 18px;
@@ -123,7 +124,7 @@
             text-decoration: none;
             text-align: center;
         }
-        .paypal-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,60,135,0.3); }
+        .bmc-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,187,0,0.4); }
         .section-divider {
             text-align: center;
             margin: 28px 0;
@@ -144,7 +145,7 @@
         .section-divider::after { right: 0; }
         .badge-intl {
             display: inline-block;
-            background: #003087;
+            background: #FF813F;
             color: #fff;
             font-size: 11px;
             font-weight: 600;
@@ -289,16 +290,34 @@
         <div class="section-divider">🌍 Europe / USA / International</div>
 
         <!-- PayPal -->
-        <div class="payment-method">
+        <div class="payment-method" onclick="window.open('https://paypal.me/HamathKane', '_blank')">
             <div class="payment-header">
                 <div class="payment-icon paypal-icon">P</div>
                 <div>
                     <div class="payment-name">PayPal <span class="badge-intl">International</span></div>
-                    <div class="payment-desc">Carte bancaire acceptée (sans compte PayPal)</div>
+                    <div class="payment-desc">Envoyez via PayPal</div>
                 </div>
             </div>
-            <a href="https://paypal.me/HamathKane" class="paypal-btn" id="paypalLink" target="_blank">
-                Faire un don via PayPal
+            <div class="phone-number">
+                <div>
+                    <div class="number" style="font-size:16px">paypal.me/HamathKane</div>
+                    <div class="name">Hamath Kane</div>
+                </div>
+                <a href="https://paypal.me/HamathKane" target="_blank" class="copy-btn" style="text-decoration:none" onclick="event.stopPropagation()">Ouvrir</a>
+            </div>
+        </div>
+
+        <!-- Buy Me a Coffee -->
+        <div class="payment-method">
+            <div class="payment-header">
+                <div class="payment-icon bmc-icon">☕</div>
+                <div>
+                    <div class="payment-name">Buy Me a Coffee <span class="badge-intl">International</span></div>
+                    <div class="payment-desc">Carte bancaire Visa / Mastercard (sans compte)</div>
+                </div>
+            </div>
+            <a href="https://buymeacoffee.com/hamathkane" class="bmc-btn" target="_blank">
+                ☕ Soutenir nos projets Pulaar
             </a>
         </div>
 
