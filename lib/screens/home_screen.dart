@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../providers/hadith_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/islamic_decoration.dart';
@@ -376,6 +377,53 @@ class HomeScreen extends StatelessWidget {
                             'Cuɓaaɗi',
                             Icons.favorite),
                       ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  // === DONATION BUTTON ===
+                  GestureDetector(
+                    onTap: () => launchUrl(
+                      Uri.parse('https://kawkumputer.github.io/hadisaaji/donation.html'),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primaryGreen,
+                            AppColors.primaryGreen.withValues(alpha: 0.85),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryGreen.withValues(alpha: 0.25),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.favorite_rounded, color: Colors.white, size: 20),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Wallit Appli\'en Pulaar ɗen',
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Icon(Icons.open_in_new, color: Colors.white.withValues(alpha: 0.7), size: 16),
+                        ],
+                      ),
                     ),
                   ),
 
