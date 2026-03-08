@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soutenir Hadisaaji - Wallitude Appli ndi</title>
+    <title>Soutenir nos Applications Pulaar - Wallit Appli'en Pulaar ɗen</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -231,18 +231,107 @@
             border-radius: 20px;
             margin-left: 8px;
         }
+        .apps-section {
+            margin-bottom: 28px;
+        }
+        .apps-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1B5E20;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        .app-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border-radius: 12px;
+            background: #f5f9f5;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+        }
+        .app-card:hover {
+            background: #e8f5e9;
+            transform: translateX(4px);
+        }
+        .app-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .app-card-info .app-card-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1B5E20;
+        }
+        .app-card-info .app-card-desc {
+            font-size: 12px;
+            color: #888;
+        }
+        .store-links {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .store-link {
+            font-size: 11px;
+            color: #1B5E20;
+            text-decoration: none;
+            background: #e8f5e9;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .store-link:hover { background: #c8e6c9; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="arabic-title">صدقة جارية</div>
-        <div class="app-name">HADISAAJI</div>
-        <h1>Wallit Application o</h1>
+        <div class="app-name">PULAAR APPS</div>
+        <h1>Wallit Appli'en Pulaar ɗen</h1>
         <p class="subtitle">
-            Soutenir le projet Hadisaaji, c'est participer à la diffusion<br>
-            des Hadiths du Prophète ﷺ en langue Pulaar.<br>
+            Soutenir les applications réalisées par <strong>Kane Hamath</strong> & <strong>Abou Sy</strong><br>
+            pour la diffusion du savoir islamique en langue Pulaar.<br>
             <strong>Sadaqa Jariya</strong> — une aumône continue.
         </p>
+
+        <!-- Apps showcase -->
+        <div class="apps-section">
+            <div class="apps-title">📱 Golleeji amen / Nos applications</div>
+
+            <div class="app-card">
+                <div class="app-icon-box" style="background:linear-gradient(135deg,#1B5E20,#4CAF50)">📖</div>
+                <div class="app-card-info">
+                    <div class="app-card-name">Quraan Pulaar</div>
+                    <div class="app-card-desc">Le Saint Coran traduit en Pulaar</div>
+                    <div class="store-links">
+                        <a href="https://play.google.com/store/apps/details?id=mr.quran_pulaar" target="_blank" class="store-link">▶ Google Play</a>
+                        <a href="https://apps.apple.com/fr/app/quraan-pulaar/id6742410170" target="_blank" class="store-link">🍎 App Store</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon-box" style="background:linear-gradient(135deg,#C8A951,#E8D48B)">☪️</div>
+                <div class="app-card-info">
+                    <div class="app-card-name">Hadisaaji</div>
+                    <div class="app-card-desc">Hadiths du Prophète ﷺ traduits en Pulaar</div>
+                    <div class="store-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.hadisaaji.hadisaaji" target="_blank" class="store-link">▶ Google Play</a>
+                        <a href="https://apps.apple.com/fr/app/hadisaaji-pulaar/id6759843030" target="_blank" class="store-link">🍎 App Store</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="verse">
             <div class="arabic">مَنْ دَلَّ عَلَى خَيْرٍ فَلَهُ مِثْلُ أَجْرِ فَاعِلِهِ</div>
@@ -322,12 +411,12 @@
         </div>
 
         <div class="info-box">
-            <p>Chaque don, petit ou grand, contribue à maintenir et enrichir l'application.</p>
-            <p>Kala ballal, famɗi walla mawni, ina wallita ñiiɓnude e ɓeydude application o.</p>
+            <p>Chaque don, petit ou grand, contribue à maintenir et enrichir nos applications.</p>
+            <p>Kala ballal, famɗi walla mawni, ina wallita ñiiɓnude e ɓeydude appli'en ɗen.</p>
             <div class="dua">جَزَاكُمُ اللَّهُ خَيْرًا</div>
         </div>
 
-        <p class="footer">© 2026 Hadisaaji — Hadiths du Prophète ﷺ en Pulaar</p>
+        <p class="footer">© 2026 Kane Hamath & Abou Sy — Applications Pulaar</p>
     </div>
 
     <script>
