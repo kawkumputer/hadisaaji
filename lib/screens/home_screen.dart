@@ -111,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                           Column(
                             children: [
                               Text(
-                                'Wallit Application o',
+                                'Wallit Golle ɗe',
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   color: Colors.white,
@@ -119,7 +119,7 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Soutenir l\'application',
+                                'Soutenir le projet — Sadaqa Jariya',
                                 style: GoogleFonts.poppins(
                                   fontSize: 11,
                                   color: Colors.white.withValues(alpha: 0.8),
