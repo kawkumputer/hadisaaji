@@ -78,6 +78,64 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // === DONATION BUTTON ===
+                  GestureDetector(
+                    onTap: () => launchUrl(
+                      Uri.parse('https://kawkumputer.github.io/hadisaaji/donation.html'),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            AppColors.primaryGreen,
+                            AppColors.primaryGreen.withValues(alpha: 0.85),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryGreen.withValues(alpha: 0.25),
+                            blurRadius: 8,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.favorite_rounded, color: Colors.white, size: 20),
+                          const SizedBox(width: 10),
+                          Column(
+                            children: [
+                              Text(
+                                'Wallit Application o',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text(
+                                'Soutenir l\'application',
+                                style: GoogleFonts.poppins(
+                                  fontSize: 11,
+                                  color: Colors.white.withValues(alpha: 0.8),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(width: 6),
+                          Icon(Icons.open_in_new, color: Colors.white.withValues(alpha: 0.7), size: 16),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
                   // === HADITH DU JOUR ===
                   Text(
                     'Hadiis Ñalngu Hannde',
@@ -377,53 +435,6 @@ class HomeScreen extends StatelessWidget {
                             'Cuɓaaɗi',
                             Icons.favorite),
                       ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // === DONATION BUTTON ===
-                  GestureDetector(
-                    onTap: () => launchUrl(
-                      Uri.parse('https://kawkumputer.github.io/hadisaaji/donation.html'),
-                      mode: LaunchMode.externalApplication,
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.primaryGreen,
-                            AppColors.primaryGreen.withValues(alpha: 0.85),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryGreen.withValues(alpha: 0.25),
-                            blurRadius: 8,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.favorite_rounded, color: Colors.white, size: 20),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Wallit Appli\'en Pulaar ɗen',
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 6),
-                          Icon(Icons.open_in_new, color: Colors.white.withValues(alpha: 0.7), size: 16),
-                        ],
-                      ),
                     ),
                   ),
 
