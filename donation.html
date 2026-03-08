@@ -107,6 +107,51 @@
         }
         .wave-icon { background: linear-gradient(135deg, #1DC3F0, #0A9BD7); }
         .om-icon { background: linear-gradient(135deg, #FF6600, #E55500); }
+        .paypal-icon { background: linear-gradient(135deg, #003087, #009CDE); }
+        .paypal-btn {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #003087, #009CDE);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+        .paypal-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,60,135,0.3); }
+        .section-divider {
+            text-align: center;
+            margin: 28px 0;
+            color: #bbb;
+            font-size: 13px;
+            position: relative;
+        }
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 35%;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        .section-divider::before { left: 0; }
+        .section-divider::after { right: 0; }
+        .badge-intl {
+            display: inline-block;
+            background: #003087;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-left: 8px;
+        }
         .payment-name {
             font-size: 18px;
             font-weight: 600;
@@ -238,6 +283,23 @@
                 </div>
                 <button class="copy-btn" id="copyBtn2" onclick="event.stopPropagation(); copyNumber()">Copier</button>
             </div>
+        </div>
+
+        <!-- Section divider -->
+        <div class="section-divider">🌍 Europe / USA / International</div>
+
+        <!-- PayPal -->
+        <div class="payment-method">
+            <div class="payment-header">
+                <div class="payment-icon paypal-icon">P</div>
+                <div>
+                    <div class="payment-name">PayPal <span class="badge-intl">International</span></div>
+                    <div class="payment-desc">Carte bancaire acceptée (sans compte PayPal)</div>
+                </div>
+            </div>
+            <a href="https://paypal.me/HamathKane" class="paypal-btn" id="paypalLink" target="_blank">
+                Faire un don via PayPal
+            </a>
         </div>
 
         <div class="info-box">

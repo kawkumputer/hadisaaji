@@ -245,7 +245,7 @@ class AboutScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Wallitude Appli ndi',
+                            'Wallit Application o',
                             style: GoogleFonts.poppins(
                               fontSize: 15,
                               color: Colors.white,
