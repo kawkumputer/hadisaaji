@@ -165,17 +165,19 @@
         .phone-number {
             background: #f5f9f5;
             border-radius: 10px;
-            padding: 14px 18px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
         .phone-number .number {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             color: #1B5E20;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            word-break: break-all;
         }
         .phone-number .name {
             font-size: 12px;
@@ -187,11 +189,12 @@
             color: #fff;
             border: none;
             border-radius: 8px;
-            padding: 8px 16px;
-            font-size: 13px;
+            padding: 8px 14px;
+            font-size: 12px;
             cursor: pointer;
             transition: background 0.2s;
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .copy-btn:hover { background: #2E7D32; }
         .copy-btn.copied {
@@ -363,7 +366,7 @@
             </div>
             <div class="phone-number">
                 <div>
-                    <div class="number" style="font-size:16px">paypal.me/HamathKane</div>
+                    <div class="number" style="font-size:14px">paypal.me/HamathKane</div>
                     <div class="name">Hamath Kane</div>
                 </div>
                 <a href="https://paypal.me/HamathKane" target="_blank" class="copy-btn" style="text-decoration:none" onclick="event.stopPropagation()">Ouvrir</a>
