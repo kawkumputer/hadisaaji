@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soutenir Hadisaaji - Wallitude Appli ndi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background: linear-gradient(135deg, #f0f7f0 0%, #faf6eb 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .app-name {
+            text-align: center;
+            color: #C8A951;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 4px;
+        }
+        .arabic-title {
+            text-align: center;
+            font-size: 32px;
+            color: #C8A951;
+            font-family: 'Traditional Arabic', serif;
+            margin-bottom: 8px;
+        }
+        h1 {
+            color: #1B5E20;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .verse {
+            text-align: center;
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            color: #fff;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .verse .arabic {
+            font-size: 22px;
+            font-family: 'Traditional Arabic', serif;
+            line-height: 2;
+            color: #C8A951;
+        }
+        .verse .translation {
+            font-size: 13px;
+            margin-top: 8px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .verse .ref {
+            font-size: 11px;
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+        .payment-method {
+            border: 2px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .payment-method:hover {
+            border-color: #1B5E20;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,94,32,0.15);
+        }
+        .payment-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        .payment-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .wave-icon { background: linear-gradient(135deg, #1DC3F0, #0A9BD7); }
+        .om-icon { background: linear-gradient(135deg, #FF6600, #E55500); }
+        .payment-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1B5E20;
+        }
+        .payment-desc {
+            font-size: 13px;
+            color: #888;
+        }
+        .phone-number {
+            background: #f5f9f5;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .phone-number .number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1B5E20;
+            letter-spacing: 1px;
+        }
+        .phone-number .name {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+        }
+        .copy-btn {
+            background: #1B5E20;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .copy-btn:hover { background: #2E7D32; }
+        .copy-btn.copied {
+            background: #C8A951;
+        }
+        .info-box {
+            background: #faf6eb;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 24px;
+            text-align: center;
+        }
+        .info-box p {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        .info-box .dua {
+            font-family: 'Traditional Arabic', serif;
+            font-size: 20px;
+            color: #C8A951;
+            margin-top: 10px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #aaa;
+            font-size: 12px;
+        }
+        .badge {
+            display: inline-block;
+            background: #C8A951;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="arabic-title">صدقة جارية</div>
+        <div class="app-name">HADISAAJI</div>
+        <h1>Wallit Application o</h1>
+        <p class="subtitle">
+            Soutenir le projet Hadisaaji, c'est participer à la diffusion<br>
+            des Hadiths du Prophète ﷺ en langue Pulaar.<br>
+            <strong>Sadaqa Jariya</strong> — une aumône continue.
+        </p>
+
+        <div class="verse">
+            <div class="arabic">مَنْ دَلَّ عَلَى خَيْرٍ فَلَهُ مِثْلُ أَجْرِ فَاعِلِهِ</div>
+            <div class="translation">"Kala kollirɗo moyyere, ina jogii hono njoɓdi gollotooɗo ndi."</div>
+            <div class="ref">Sahiih Muslim 1893</div>
+        </div>
+
+        <!-- Wave -->
+        <div class="payment-method" onclick="copyNumber()">
+            <div class="payment-header">
+                <div class="payment-icon wave-icon">W</div>
+                <div>
+                    <div class="payment-name">Wave <span class="badge">Senegal</span></div>
+                    <div class="payment-desc">Envoyez via Wave</div>
+                </div>
+            </div>
+            <div class="phone-number">
+                <div>
+                    <div class="number">+221 77 309 17 82</div>
+                    <div class="name">Abuu Sih</div>
+                </div>
+                <button class="copy-btn" id="copyBtn1" onclick="event.stopPropagation(); copyNumber()">Copier</button>
+            </div>
+        </div>
+
+        <!-- Orange Money -->
+        <div class="payment-method" onclick="copyNumber()">
+            <div class="payment-header">
+                <div class="payment-icon om-icon">OM</div>
+                <div>
+                    <div class="payment-name">Orange Money <span class="badge">Senegal</span></div>
+                    <div class="payment-desc">Envoyez via Orange Money</div>
+                </div>
+            </div>
+            <div class="phone-number">
+                <div>
+                    <div class="number">+221 77 309 17 82</div>
+                    <div class="name">Abuu Sih</div>
+                </div>
+                <button class="copy-btn" id="copyBtn2" onclick="event.stopPropagation(); copyNumber()">Copier</button>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <p>Chaque don, petit ou grand, contribue à maintenir et enrichir l'application.</p>
+            <p>Kala ballal, famɗi walla mawni, ina wallita ñiiɓnude e ɓeydude application o.</p>
+            <div class="dua">جَزَاكُمُ اللَّهُ خَيْرًا</div>
+        </div>
+
+        <p class="footer">© 2026 Hadisaaji — Hadiths du Prophète ﷺ en Pulaar</p>
+    </div>
+
+    <script>
+        function copyNumber() {
+            const number = '+221773091782';
+            navigator.clipboard.writeText(number).then(() => {
+                const btns = document.querySelectorAll('.copy-btn');
+                btns.forEach(btn => {
+                    btn.textContent = 'Copié ✓';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = 'Copier';
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            }).catch(() => {
+                // Fallback
+                const input = document.createElement('input');
+                input.value = number;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('Numéro copié: ' + number);
+            });
+        }
+    </script>
+</body>
+</html>
